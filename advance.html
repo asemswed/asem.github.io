@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <title>اختبار الاتصال المتقدم</title>
+    <style> body { font-family: sans-serif; text-align: center; padding: 20px; } button { margin: 10px; padding: 10px 20px; font-size: 16px; cursor: pointer;} #result { margin-top: 20px; font-weight: bold; color: #007BFF; background-color: #f0f0f0; padding: 15px; border-radius: 5px; text-align: left; direction: ltr;} </style>
+</head>
+<body>
+    <h1>اختبار الاتصال المتقدم (مع Preflight)</h1>
+    <button onclick="testPost()">اختبار طلب POST مع بيانات JSON</button>
+    <hr>
+    <h2>النتيجة:</h2>
+    <pre id="result">...</pre>
+
+    <script>
+        // ⚠️ مهم: الصق هنا رابط تطبيق الويب الذي نسخته
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbytY-80ob0yC_ptPqawUrugtBth9Su38sWGJZONi55xNI2yvFB0UMYXjFh6Wu6xPqZ/exec";
+
+        const resultDiv = document.getElementById('result');
+
+        function testPost() {
+            resultDiv.innerText = 'جاري إرسال طلب POST مع بيانات JSON...';
+
+            const dataToSend = {
+                studentName: "طالب تجريبي",
+                pages: [1, 2, 3]
+            };
+
+            fetch(WEB_APP_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(dataToSend)
+            })
+            .then(response => response.json())
+            .then(data => {
+                resultDiv.innerText = 'نجح الطلب!\n\n' + JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                resultDiv.innerText = 'فشل الطلب:\n' + error.toString();
+            });
+        }
+    </script>
+</body>
+</html>
